@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Plane } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GulfstreamLanding() {
@@ -11,8 +12,9 @@ export default function GulfstreamLanding() {
     useEffect(() => {
         const ctx = gsap.context(() => {
 
+            // Global Scroll Animation: Hero Text Fade Up
             gsap.fromTo(".hero-text",
-                { opacity: 0, y: 70 },
+                { opacity: 0, y: 80 },
                 {
                     opacity: 1,
                     y: 0,
@@ -26,8 +28,9 @@ export default function GulfstreamLanding() {
                 }
             );
 
+            // Global Scroll Animation: Transition Section Text Reveal
             gsap.fromTo(".transition-text-block",
-                { opacity: 0, y: 40 },
+                { opacity: 0, y: 50 },
                 {
                     opacity: 1,
                     y: 0,
@@ -41,8 +44,9 @@ export default function GulfstreamLanding() {
                 }
             );
 
+            // Global Scroll Animation: Bottom Section Fade Up
             gsap.fromTo(".bottom-section-text",
-                { opacity: 0, y: 50 },
+                { opacity: 0, y: 60 },
                 {
                     opacity: 1,
                     y: 0,
@@ -62,45 +66,40 @@ export default function GulfstreamLanding() {
                     trigger: ".jet-trigger-section",
                     start: "top top",
                     end: "+=4000",
-                    scrub: 2,
+                    scrub: 2, // Slightly lowered for snappier native feel
                     pin: true,
-                    markers: false
+                    markers: false // Turn off for production
                 }
             });
 
-            gsap.set(".animation-container", {
-                y: "110vh",
-                scale: 3.5
+            // Initial state layout setup
+            gsap.set(".flying-jet-svg", {
+                y: "130vh",
+                scale: 4.5
             });
 
-            gsap.set(".jet-wireframe", {
-                opacity: 0
-            });
-
-            tl.to(".animation-container", {
+            // PHASE 1a: Fly into viewport natively
+            tl.to(".flying-jet-svg", {
                 y: "0vh",
                 duration: 4,
                 ease: "power1.out"
             })
-                .to(".animation-container", {
-                    scale: 1.8,
+
+                // PHASE 1b: Scale down and dock seamlessly
+                .to(".flying-jet-svg", {
+                    scale: 1.2,
                     duration: 4,
                     ease: "power2.inOut"
                 })
 
-
+                // PHASE 2: The SVG Mask Wipe (Reveals the wireframe natively stacked below)
                 .to("#mask-rect", {
                     attr: { height: 0 },
                     duration: 3.5,
                     ease: "none"
-                }, "revealLabel")
+                })
 
-                .to(".jet-wireframe", {
-                    opacity: 1,
-                    duration: 1.5,
-                    ease: "power1.out"
-                }, "revealLabel")
-
+                // PHASE 3: The Scroll Buffer (Absorb interaction before unpinning)
                 .to({}, { duration: 1.5 });
 
         }, containerRef);
@@ -111,18 +110,19 @@ export default function GulfstreamLanding() {
     return (
         <div ref={containerRef} className="bg-[#E9E6DF] min-h-screen font-sans text-gray-900 overflow-x-hidden">
 
-            <section className="relative h-[120vh] bg-[#E9E6DF]">
+            {/* SECTION 1: Hero Block with Custom Clouds Background */}
+            <section className="relative h-[120vh]">
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
                     style={{ backgroundImage: "url('cloud_01.webp')" }}
                 >
-
-                    <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#E9E6DF] h-full w-full"></div>
+                    {/* Fixed Blend: Transitions perfectly into the main background color #E9E6DF */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#E9E6DF]"></div>
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center justify-end h-screen pb-32 px-6">
                     <div className="hero-text text-center opacity-0">
-                        <div className="flex flex-col md:flex-row justify-between gap-6 items-center w-full max-w-6xl mx-auto mb-16 px-4">
+                        <div className="flex justify-between items-center w-full max-w-6xl mx-auto mb-16 px-4">
                             <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-gray-900">Fly in</h1>
                             <h1 className="text-6xl md:text-9xl font-bold tracking-tighter text-gray-900">Luxury</h1>
                         </div>
@@ -149,7 +149,8 @@ export default function GulfstreamLanding() {
                 </div>
             </section>
 
-            <section className="relative bg-[#E9E6DF] py-32 px-6 z-20">
+            {/* SECTION 2: Blending Transition Zone */}
+            <section className="relative bg-[#E9E6DF] py-32 px-6 z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.03)] border-t border-stone-200/40">
                 <div className="transition-text-block max-w-3xl mx-auto text-center opacity-0">
                     <span className="text-xs uppercase tracking-widest text-gray-500 font-bold">Engineering Excellence</span>
                     <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mt-3 leading-tight">
@@ -158,31 +159,12 @@ export default function GulfstreamLanding() {
                 </div>
             </section>
 
-            <section className="jet-trigger-section bg-[#E9E6DF] relative z-20 w-full h-screen flex items-center justify-center overflow-hidden px-4 md:px-12">
+            {/* SECTION 3: Pinned Immersive Jet Matrix */}
+            <section className="jet-trigger-section bg-[#E9E6DF] relative z-20">
+                <div className="h-screen w-full flex items-center justify-center overflow-hidden px-4 md:px-12">
 
-                {/* Aspect ratio wrapper box ensures structural uniformity */}
-                <div className="animation-container relative w-full max-w-5xl aspect-1000/600">
-
-                    {/* LAYER 1: Separate Wireframe Blueprint SVG Wrapper */}
-                    <svg
-                        className="jet-wireframe absolute inset-0 w-full h-full pointer-events-none filter brightness-[0.70] contrast-[1.40]"
-                        viewBox="0 0 1000 600"
-                        preserveAspectRatio="xMidYMid meet"
-                    >
-                        <image
-                            href="jet_blueprint.webp"
-                            width="100%"
-                            height="100%"
-                            preserveAspectRatio="xMidYMid meet"
-                        />
-                    </svg>
-
-                    {/* LAYER 2: Separate Jet SVG Wrapper */}
-                    <svg
-                        className="flying-jet absolute inset-0 w-full h-full"
-                        viewBox="0 0 1000 600"
-                        preserveAspectRatio="xMidYMid meet"
-                    >
+                    {/* Single unified SVG viewport ensuring perfect structural layout sync */}
+                    <svg className="flying-jet-svg w-full max-w-5xl h-auto aspect-1000/600" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                         <defs>
                             <filter id="bottom-blur" x="-20%" y="-20%" width="140%" height="140%">
                                 <feGaussianBlur stdDeviation="0 15" />
@@ -193,6 +175,15 @@ export default function GulfstreamLanding() {
                             </mask>
                         </defs>
 
+                        {/* BASE LAYER: The wireframe blueprint. Protected from mask effects */}
+                        {/* <image
+                            href="jet_blueprint.webp"
+                            width="100%"
+                            height="100%"
+                            preserveAspectRatio="xMidYMid meet"
+                        /> */}
+
+                        {/* TOP LAYER: Rendered aircraft model. Controlled dynamically by the clipping mask */}
                         <image
                             href="jesko_jet.webp"
                             width="100%"
@@ -205,15 +196,17 @@ export default function GulfstreamLanding() {
                 </div>
             </section>
 
-            <section className="bg-[#E9E6DF] py-40 px-6 relative z-20">
+            {/* SECTION 4: Next Phase Content */}
+            <section className="bg-[#e8e6e1] py-40 px-6 relative z-20">
                 <div className="bottom-section-text max-w-4xl mx-auto text-center opacity-0">
                     <h2 className="text-4xl font-bold mb-6 text-gray-900">Experience the Unmatched</h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Whether spanning international datelines or micro-adjusting cruising coordinates, flight integrity remains flawlessly realized.
+                        Whether spanning oceans or scaling crosswinds, every detail of the flight profiles remains meticulously calibrated.
                     </p>
                 </div>
             </section>
 
+            {/* FOOTER */}
             <footer className="bg-gray-900 text-white py-12 text-center relative z-20">
                 <p className="text-gray-400 text-sm">© 2026 Gulfstream Aerospace Corporation. All rights reserved.</p>
             </footer>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Plane } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -151,9 +151,9 @@ export default function GulfstreamLanding() {
 
             <section className="relative bg-[#E9E6DF] py-32 px-6 z-20">
                 <div className="transition-text-block max-w-3xl mx-auto text-center opacity-0">
-                    <span className="text-xs uppercase tracking-widest text-gray-500 font-bold">Engineering Excellence</span>
+                    <span className="text-xs uppercase tracking-widest text-gray-500 font-bold">Aeronautical Canvas</span>
                     <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 mt-3 leading-tight">
-                        The intersection of aerodynamic performance and bespoke cabin craft.
+                        Precision tracking configurations modeled for private transit architectures.
                     </h2>
                 </div>
             </section>
