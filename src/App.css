@@ -74,39 +74,14 @@
   }
 }
 
-/* WINDOW */
-
-.window-frame {
-  position: fixed;
-  inset: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 100;
-  pointer-events: none;
-}
-
-.window-frame img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  transform-origin: center center;
-
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
 /* CLOUDS */
 
 .clouds {
   position: absolute;
   left: 0;
   right: 0;
+
+  height: 100vh;
 
   top: 14vh;
 
@@ -143,17 +118,112 @@
   }
 }
 
-/* TEMP */
+/* WINDOW */
 
-.spacer {
-  min-height: 100vh;
+.window-frame {
+  position: fixed;
+  inset: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #111;
+  z-index: 100;
+  pointer-events: none;
+}
 
-  color: white;
-  font-size: clamp(2rem, 5vw, 4rem);
+.window-group {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.window-main,
+.window-inner {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  will-change: transform;
+  pointer-events: none;
+}
+
+.window-main {
+  z-index: 21;
+}
+
+.window-inner {
+  z-index: 19;
+}
+
+.window-shield-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  will-change: transform;
+}
+
+.window-shield-bg {
+  position: absolute;
+  bottom: 30.5%;
+  left: 0;
+
+  width: 24rem;
+  max-width: 24rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 150vh;
+
+  background: rgba(179, 178, 177, 1);
+
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.2) 80%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(152, 158, 161, 0.4);
+
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.35),
+    inset 0 0 10px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.window-knob {
+  position: absolute;
+  width: 24rem;
+  top: 68%;
+  left: 50%;
+  max-width: 80vw;
+  transform: translateX(-50%);
+}
+
+.window-frame::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(231, 225, 213, 0.65),
+    transparent 70%
+  );
+  filter: blur(50px);
+  z-index: 1;
 }

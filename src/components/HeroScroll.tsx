@@ -6,7 +6,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   useEffect(() => {
-    const tween = gsap.to(".window-frame img", {
+
+    gsap.fromTo(
+      ".window-shield-wrapper",
+      {
+        y: "0",
+      },
+      {
+        y: "-47vh",
+        opacity: 1,
+        duration: 1.4,
+        delay: 0.6,
+        ease: "power2.inOut",
+        markers: true,
+      }
+    );
+
+    const scrollTween = gsap.to(".window-group", {
       scale: window.innerWidth < 768 ? 5 : 12,
       ease: "none",
 
@@ -20,7 +36,7 @@ export default function Hero() {
     });
 
     return () => {
-      tween.kill();
+      scrollTween.kill();
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
@@ -42,11 +58,26 @@ export default function Hero() {
       </div>
 
       <div className="window-frame">
-        <img
-          src="/window-view.webp"
-          alt=""
-        />
+        <div className="window-group">
+          <img
+            className="window-main"
+            src="/window-view.webp"
+            alt=""
+          />
+
+          <div className="window-shield-wrapper">
+            <div className="window-shield-bg"></div>
+            <img className="window-knob" src="/window-knob.webp" alt="" />
+          </div>
+
+          <img
+            className="window-inner"
+            src="/hero-window-inner-frame.webp"
+            alt=""
+          />
+        </div>
       </div>
+
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#E9E6DF] h-full w-full"></div>
     </section>
   );
