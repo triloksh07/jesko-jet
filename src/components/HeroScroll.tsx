@@ -15,7 +15,7 @@ export default function Hero() {
         start: "top top",
         end: "+=1800",
         scrub: true,
-        markers: true,
+        markers: false,
       },
     });
 
