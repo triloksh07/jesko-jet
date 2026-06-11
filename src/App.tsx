@@ -1,13 +1,25 @@
-import './App.css'
-import GulfstreamLanding from './components/HomePage'
+import { useLenisScroll } from './hooks/useLenisScroll';
+import HeroScroll from './components/HeroScroll';
+import "./App.css";
+import PlaneMorph from './components/PlaneMorph';
+import Footer from './components/Footer';
 
-function App() {
+export default function App() {
+  useLenisScroll();
 
   return (
-    <>
-      <GulfstreamLanding />
-    </>
-  )
+    <div className="relative w-full min-h-screen bg-[#141110] selection:bg-neutral-800 selection:text-[#E9E6DF]">
+
+      <main id="luxury-scrolling-stage" className="relative z-10">
+
+        <HeroScroll />
+        <PlaneMorph />
+
+        <Footer />
+
+      </main>
+
+    </div>
+  );
 }
 
-export default App

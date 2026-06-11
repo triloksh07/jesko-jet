@@ -170,7 +170,7 @@ export default function GulfstreamLanding() {
                         preserveAspectRatio="xMidYMid meet"
                     >
                         <image
-                            href="jet_blueprint.webp"
+                            href="jet-wireframe.webp"
                             width="100%"
                             height="100%"
                             preserveAspectRatio="xMidYMid meet"
@@ -194,7 +194,7 @@ export default function GulfstreamLanding() {
                         </defs>
 
                         <image
-                            href="jesko_jet.webp"
+                            href="jet.webp"
                             width="100%"
                             height="100%"
                             mask="url(#clip-mask)"
