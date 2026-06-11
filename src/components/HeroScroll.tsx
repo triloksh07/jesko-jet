@@ -1,11 +1,25 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useAssetLoader } from "../hooks/useAssetsLoader";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const imageUrls = [
+  "clouds_img_sky-hero.webp",
+  "animated-clouds.webp",
+  "window-view.webp",
+  "jet-wireframe.webp",
+  "jet.webp",
+  "clouds-secondary.avif",
+]
+
 export default function Hero() {
+  const { isLoaded, progress } = useAssetLoader(imageUrls);
+
   useEffect(() => {
+
+    if (!isLoaded) return;
 
     gsap.fromTo(
       ".window-shield-wrapper",
@@ -39,7 +53,18 @@ export default function Hero() {
       scrollTween.kill();
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
-  }, []);
+  }, [isLoaded]);
+
+
+  if (!isLoaded) {
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-[#E9E6DF]">
+        <div className="text-sm tracking-widest text-gray-500 uppercase">
+          Initializing Engine... {progress}%
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="hero">
