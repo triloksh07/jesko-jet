@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import FlightHero from './FlightHero';
-import FlightSpecs from './FlightSpecs';
+import FlightHero from '../FlightHero';
+import FlightSpecs from '../FlightSpecs';
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -126,17 +126,14 @@ export default function GulfstreamLanding() {
                 })
                 .to({}, { duration: 0.5 })
 
-                // Step 2: Jet starts entering (Using .from to pull it up from the bottom)
-                // yPercent is much safer than vh for cross-browser consistency
                 .from(".animation-container", {
-                    // yPercent: 150, // Starts 1.5x its own height down
-                    y: "200vh", 
-                    scale: 3.5,    // Starts massive
+                    yPercent: 200, 
+                    // y: "200vh",
+                    scale: 3.5,
                     duration: 4,
                     ease: "power1.out"
                 })
 
-                // Step 3: THE PURE SLIDE SWAP
                 .addLabel("textSwap")
                 .to(".hero-container", {
                     y: "100vh",
@@ -149,12 +146,9 @@ export default function GulfstreamLanding() {
                     ease: "power1.inOut"
                 }, "textSwap")
 
-                // Because we used .from() above, the jet is ALREADY resting perfectly in the center.
-                // We don't need to animate its position here anymore! 
-                // It just sits perfectly still while the text swaps around it.
                 .to({}, { duration: 6 }, "textSwap")
 
-                // Step 4: Mask reveal and wireframe merge
+
                 .to("#mask-rect", {
                     attr: { height: 0 },
                     duration: 4,
@@ -173,9 +167,9 @@ export default function GulfstreamLanding() {
         return () => ctx.revert();
     }, []);
     return (
-        <div ref={containerRef} className="bg-[#E9E6DF] min-h-[100svh] font-sans text-gray-900 overflow-x-hidden overscroll-none">
+        <div ref={containerRef} className="bg-[#E9E6DF] min-h-svh font-sans text-gray-900 overflow-x-hidden overscroll-none pointer-events-auto">
 
-            <section className="jet-trigger-section relative z-20 w-full h-[100svh] flex items-center justify-center overflow-hidden">
+            <section className="jet-trigger-section relative z-20 w-full h-svh flex items-center justify-center overflow-hidden">
 
                 <div className="hero-container absolute inset-0 z-10 w-full h-full pointer-events-auto">
                     <FlightHero />
@@ -185,9 +179,8 @@ export default function GulfstreamLanding() {
                     <FlightSpecs />
                 </div>
 
-                <div className="animation-container relative z-20 w-full max-w-5xl aspect-[1000/600] pointer-events-none px-4 md:px-12">
+                <div className="animation-container relative z-20 w-full max-w-5xl aspect-1000/600 pointer-events-none px-4 md:px-12">
 
-                    {/* RESTORED: Your original SVG Wireframe */}
                     <svg
                         className="jet-wireframe absolute inset-0 w-full h-full filter brightness-[0.80] contrast-[1.40]"
                         viewBox="0 0 1000 600"
@@ -201,7 +194,6 @@ export default function GulfstreamLanding() {
                         />
                     </svg>
 
-                    {/* RESTORED: Your original SVG Mask Engine */}
                     <svg
                         className="flying-jet absolute inset-0 w-full h-full"
                         viewBox="0 0 1000 600"
