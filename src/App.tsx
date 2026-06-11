@@ -1,7 +1,7 @@
+import "./App.css";
 import { useLenisScroll } from './hooks/useLenisScroll';
 import HeroScroll from './components/HeroScroll';
-import "./App.css";
-import PlaneMorph from './components/PlaneMorph';
+import PlaneMorph from './components/Jet';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -14,7 +14,6 @@ export default function App() {
 
         <HeroScroll />
         <PlaneMorph />
-
         <Footer />
 
       </main>
